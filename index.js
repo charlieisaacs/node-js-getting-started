@@ -35,6 +35,7 @@ app.post('/smarterai', function (req1, res1) {
 var itemId = "future";
 
 if (deviceId == null) {
+  deviceId = "serial12345";
   console.log('this requires a deviceId and should be included as a record in the wfachallengeResponse Custom Object in Salesforce');
 }
 // GET TOKEN
@@ -100,8 +101,6 @@ salesforceoptions = {
       }); 
       res.on('end', function(){
         console.log('SF Response: ' + body);
-        console.log('success, calling queryresponse: ');
-        queryresponse(token,res1,deviceId);
         if (actionId == 'redon' || actionId == 'alloff' || actionId == 'greenon') {
           lightcontrol(actionId);
         }
@@ -132,92 +131,4 @@ console.log('problem with request: ' + e.message);
 // write data to request body
 req.end();
 }); 
-function queryresponse(token,res1,deviceId) {
-  //
-  // This is a SOQL query that grabs the output from the Flow
-  //
-  var bearertoken = 'Bearer '+token;
-  var pathstring = 'https://dfcharlie19sdo-demo.my.salesforce.com/services/data/v20.0/query/?q=SELECT+Response__c+from+wfachallengeResponse__c+where+deviceId__c=\''+deviceId+'\'';
-  wfachallengeoptions = {
-    hostname: 'dfcharlie19sdo-demo.my.salesforce.com',
-    port: 443,
-    path: pathstring,  
-    method: 'GET',  
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': bearertoken
-    }
-  }; 
-  var reqwfachallenge = http.request(wfachallengeoptions, function(reswfachallenge) {
-    var body = '';
-    console.log('Status: ' + reswfachallenge.statusCode);
-    //console.log('Headers: ' + JSON.stringify(reswfachallenge.headers));
-    reswfachallenge.on('data', function (wfachallengechunk) {
-      body += wfachallengechunk;
-    ////
-    }); 
-    reswfachallenge.on('end', function(){
-      console.log('###########wfachallenge Body: ' + body);
-      var wfachallengeobj = JSON.parse(body);
-      for (x in wfachallengeobj) {
-        //console.log('wfachallenge: '+x);
-        if (x == 'records') {
-          console.log('Response[0]: ' + wfachallengeobj.records[0].Response__c);
-          salesforceresponse = wfachallengeobj.records[0].Response__c;
-          console.log('salesforceresponse' + salesforceresponse);
-          res1.send(salesforceresponse);
-         
-        } 
-      }
-    }); // response from wfachallenge 'end'
- 
-});
-reqwfachallenge.on('error', function(e) {
-console.log('problem with request: ' + e.message);
-});
 
-// write data to request body
-reqwfachallenge.end();
-////END of queryresponse
-}
-
-function lightcontrol (actionId) {
-  console.log('changing LED...');
-  var postData = querystring.stringify({
-    args: actionId
-  });
-  var optionsparticle = {
-    method: 'POST', 
-    hostname: 'api.particle.io',
-    path: '/v1/devices/42004f001051363036373538/mask',
-    port: 443,
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': 'Bearer 95bc8b1b03e64511149e156cc61be2175f80c09a',
-      'Content-Length': postData.length
-    }
-  
-  };
-  
-  var particlereq= http.request(optionsparticle, function (particleres) {
-    var chunks = [];
-  
-    particleres.on("data", function (chunk) {
-      chunks.push(chunk);
-    });
-  
-    particleres.on("end", function (chunk) {
-      var body = Buffer.concat(chunks);
-      console.log(body.toString());
-    });
-  
-    particleres.on("error", function (error) {
-      console.error(error);
-    });
-  });
-
-  particlereq.write(postData);
-  
-  particlereq.end();
-
-}
