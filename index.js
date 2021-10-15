@@ -101,9 +101,6 @@ salesforceoptions = {
       }); 
       res.on('end', function(){
         console.log('SF Response: ' + body);
-        if (actionId == 'redon' || actionId == 'alloff' || actionId == 'greenon') {
-          lightcontrol(actionId);
-        }
       });
       
     });
