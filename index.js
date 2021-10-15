@@ -10,7 +10,7 @@ var port = process.env.PORT || 8080;
 var http = require("https");
 var bodyParser = require('body-parser');
 var deviceId="";
-
+ 
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
