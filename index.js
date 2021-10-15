@@ -10,7 +10,7 @@ var port = process.env.PORT || 8080;
 var http = require("https");
 var bodyParser = require('body-parser');
 var token = "FILL IN";
-var options2; 
+var options2;  
 var stringoptions; 
 var savedbody = "";
 var fs = require('fs');
