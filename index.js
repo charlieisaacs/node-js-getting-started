@@ -21,7 +21,7 @@ console.log('Server started!');
 app.post('/smarterai', function (req1, res1) {
   console.log('POST /df21shoes');
   console.log(req1.body);
-  command = req1.body.args;
+  command = req1.body.ID;
   deviceId = req1.body.deviceId;
   console.log('text: ' + command);
   var options = "{}";
