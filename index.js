@@ -101,6 +101,7 @@ salesforceoptions = {
       }); 
       res.on('end', function(){
         console.log('SF Response: ' + body);
+        
       });
       
     });
@@ -111,14 +112,8 @@ salesforceoptions = {
     req.write(jsonpayload);
    
     req.end();
-/// Wait to complete
-////
-//// Send Response Back
-////
 
-var body =  '{"deviceIdNumber__c":"1234567","speech__c":"hello world"}';
-
-var obj = JSON.parse(body);
+res.send('Success!');
 
 });
 });
@@ -127,6 +122,6 @@ console.log('problem with request: ' + e.message);
 });
 // write data to request body
 req.end();
-res.send('Success!');
+
 }); 
 
