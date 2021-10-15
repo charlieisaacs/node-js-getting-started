@@ -19,7 +19,7 @@ app.listen(port);
 console.log('Server started!');
 // routes will go here
 app.post('/smarterai', function (req1, res1) {
-  console.log('POST /df21shoes');
+  console.log('POST /smarterai');
   console.log(req1.body);
   command = req1.body.ID;
   deviceId = req1.body.deviceId;
@@ -65,11 +65,11 @@ app.post('/smarterai', function (req1, res1) {
   
     res.on("end", function (chunk) {
       var body = Buffer.concat(chunks);
-      console.log(body.toString());
+      console.log("Success!"+body.toString());
     });
   
     res.on("error", function (error) {
-      console.error(error);
+      console.error("ERROR: "+error);
     });
   });
   
