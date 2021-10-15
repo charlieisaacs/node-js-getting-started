@@ -127,5 +127,6 @@ console.log('problem with request: ' + e.message);
 });
 // write data to request body
 req.end();
+res.send('Success!');
 }); 
 
