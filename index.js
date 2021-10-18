@@ -60,8 +60,7 @@ app.post('/smarterai', function (req1, res1) {
   });
   
   req.write(postData);
-  res1.sendStatus(200)
-  res1.send("Successful!");
+  res1.sendStatus(200);
   req.end();
 
 })
