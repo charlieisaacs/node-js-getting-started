@@ -10,10 +10,10 @@ var port = process.env.PORT || 8080;
 var http = require("https");
 var bodyParser = require('body-parser');
 var deviceId="";
- 
+
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
-
+ 
 // start the server
 app.listen(port);
 console.log('Server started!');
@@ -21,7 +21,7 @@ console.log('Server started!');
 app.post('/smarterai', function (req1, res1) {
   console.log('POST /smarterai');
   console.log(req1.body);
-  command = req1.body.ID;
+  command = req1.body.args;
   deviceId = req1.body.deviceId;
   console.log('text: ' + command);
   var options = "{}";
@@ -32,7 +32,7 @@ app.post('/smarterai', function (req1, res1) {
     var options = {
       method: 'POST', 
       hostname: 'api.particle.io',
-      path: '/v1/devices/220039000f51353338363333/shoes',
+      path: '/v1/devices/42004f001051363036373538/mask',
       port: 443,
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -65,11 +65,11 @@ app.post('/smarterai', function (req1, res1) {
   
     res.on("end", function (chunk) {
       var body = Buffer.concat(chunks);
-      console.log("Success!"+body.toString());
+      console.log(body.toString());
     });
   
     res.on("error", function (error) {
-      console.error("ERROR: "+error);
+      console.error(error);
     });
   });
   
