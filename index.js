@@ -74,6 +74,7 @@ app.post('/smarterai', function (req1, res1) {
   });
   
   req.write(postData);
+  res1.writeHead(200, {'Content-Type': 'text/plain'});
   res1.send("Successful!");
   req.end();
 
