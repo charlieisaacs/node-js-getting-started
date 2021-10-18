@@ -18,6 +18,9 @@ app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.listen(port);
 console.log('Server started!');
 // routes will go here
+app.head("/smarterai",(req2,res2)=>{
+  res2.sendStatus(200);
+})
 app.post('/smarterai', function (req1, res1) {
   console.log('POST /smarterai');
   console.log(req1.body);
