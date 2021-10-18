@@ -19,6 +19,7 @@ app.listen(port);
 console.log('Server started!');
 // routes will go here
 app.post('/smarterai', function (req1, res1) {
+  res1.writeHead(200, {'Content-Type': 'text/plain'});
   console.log('POST /smarterai');
   console.log(req1.body);
   command = req1.body.args;
@@ -28,7 +29,7 @@ app.post('/smarterai', function (req1, res1) {
   var postData = querystring.stringify({
     args: command
   });
-  if (deviceId == "robotc") {
+
     var options = {
       method: 'POST', 
       hostname: 'api.particle.io',
@@ -40,21 +41,7 @@ app.post('/smarterai', function (req1, res1) {
         'Content-Length': postData.length
       }
     }
-  }
-  else {
-    var options = {
-    method: 'POST', 
-    hostname: 'api.particle.io',
-    path: '/v1/devices/300045000647353138383138/mask',
-    port: 443,
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': 'Bearer 95bc8b1b03e64511149e156cc61be2175f80c09a',
-      'Content-Length': postData.length
-    }
-  }
   
-  };
   
   var req = http.request(options, function (res) {
     var chunks = [];
@@ -74,7 +61,6 @@ app.post('/smarterai', function (req1, res1) {
   });
   
   req.write(postData);
-  res1.writeHead(200, {'Content-Type': 'text/plain'});
   res1.send("Successful!");
   req.end();
 
