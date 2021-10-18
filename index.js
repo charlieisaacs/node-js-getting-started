@@ -19,7 +19,6 @@ app.listen(port);
 console.log('Server started!');
 // routes will go here
 app.post('/smarterai', function (req1, res1) {
-  res1.writeHead(200, {'Content-Type': 'text/plain'});
   console.log('POST /smarterai');
   console.log(req1.body);
   command = req1.body.args;
@@ -61,6 +60,7 @@ app.post('/smarterai', function (req1, res1) {
   });
   
   req.write(postData);
+  res1.sendStatus(200)
   res1.send("Successful!");
   req.end();
 
