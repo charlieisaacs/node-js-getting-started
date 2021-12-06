@@ -68,7 +68,7 @@ app.post('/smarterai', function (req1, res1) {
   
     res.on("data", function (chunk) {
       chunks.push(chunk);
-    });
+    });   
   
     res.on("end", function (chunk) {
       var body = Buffer.concat(chunks);
